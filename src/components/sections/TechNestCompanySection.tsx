@@ -1,7 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { fadeUp } from "../../lib/animations";
+import { fadeUp, mobileVariants, viewportConfig } from "../../lib/animations";
+import { useIsMobile } from "../../hooks/use-is-mobile";
+import MotionSection from "../ui/MotionSection";
 import {
   Zap,
   Users,
@@ -44,14 +46,16 @@ const values = [
 ];
 
 export default function TechNestCompanySection() {
+  const isMobile = useIsMobile();
+
   return (
-    <motion.section
+    <MotionSection
       id="company"
-      variants={fadeUp}
+      variants={isMobile ? mobileVariants : fadeUp}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true }}
-      className="relative scroll-mt-32 w-full py-24 sm:py-32 px-6 bg-background overflow-hidden"
+      viewport={viewportConfig}
+      className="relative scroll-mt-32 w-full py-24 sm:py-32 px-6 bg-background overflow-hidden mobile-static"
     >
       {/* BACKGROUND LOGO */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.035] sm:-translate-y-56">
@@ -65,7 +69,6 @@ export default function TechNestCompanySection() {
       </div>
 
       <div className="relative z-10 max-w-6xl mx-auto space-y-20 sm:space-y-24">
-
         {/* HEADER */}
         <div className="text-center space-y-6">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20">
@@ -120,8 +123,7 @@ export default function TechNestCompanySection() {
 
         {/* VALUES + STATS */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12">
-
-          {/* Values */}
+          {/* VALUES */}
           <div className="rounded-2xl bg-card border border-border p-6 sm:p-8">
             <h3 className="text-xl sm:text-2xl font-semibold text-foreground mb-6">
               Principios de trabajo
@@ -156,7 +158,7 @@ export default function TechNestCompanySection() {
             ))}
           </div>
 
-          {/* CONTACT  */}
+          {/* CONTACT */}
           <div className="md:col-span-2 rounded-2xl border border-border bg-card/70 backdrop-blur p-6 sm:p-8 space-y-6">
             <h3 className="text-xl sm:text-2xl font-semibold text-foreground">
               Contacto Empresarial
@@ -178,7 +180,7 @@ export default function TechNestCompanySection() {
               </div>
             </div>
 
-            {/* WATHSAPP */}
+            {/* WHATSAPP */}
             <div className="flex items-start gap-4">
               <div className="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center">
                 <Phone className="w-6 h-6 text-secondary" />
@@ -222,6 +224,6 @@ export default function TechNestCompanySection() {
           </div>
         </div>
       </div>
-    </motion.section>
+    </MotionSection>
   );
 }

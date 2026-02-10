@@ -1,7 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { fadeUp } from "../../lib/animations";
+import { fadeUp, mobileVariants, viewportConfig } from "../../lib/animations";
+import { useIsMobile } from "../../hooks/use-is-mobile";
+import MotionSection from "../ui/MotionSection";
 import ProjectCard from "../../components/ui/ProjectCard";
 
 const projects = [
@@ -28,7 +30,7 @@ const projects = [
     tech: ["Kotlin", "Android", "Firebase"],
     status: "Completado",
     image: "/projects/avocado.jpg",
-    repoUrl: "#",
+    repoUrl: "https://github.com/Oldeee0225/AvocadoApp",
     featured: true,
   },
   {
@@ -52,7 +54,7 @@ const projects = [
     tech: ["Next.js", "TypeScript", "Tailwind CSS"],
     status: "Completado",
     image: "/projects/portfolio.jpg",
-    repoUrl: "#",
+    repoUrl: "https://github.com/Oldeee0225/My-Portfolio-Dev",
     featured: true,
   },
   {
@@ -80,14 +82,15 @@ const projects = [
 ];
 
 export default function Projects() {
+  const isMobile = useIsMobile();
   return (
-    <motion.section
+    <MotionSection
       id="projects"
-      variants={fadeUp}
+      variants={isMobile ? mobileVariants : fadeUp}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true }}
-      className="scroll-mt-32 w-full py-28 md:py-32 px-6 bg-background"
+      viewport={viewportConfig}
+      className="scroll-mt-32 w-full py-28 md:py-32 px-6 bg-background mobile-static"
     >
       <div className="max-w-7xl mx-auto space-y-14 md:space-y-20">
 
@@ -108,21 +111,13 @@ export default function Projects() {
         </div>
 
         {/* GRID */}
-        <div
-          className="
-            grid gap-6
-            sm:grid-cols-2
-            lg:grid-cols-3
-          "
-        >
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((project) => (
-            <ProjectCard
-              key={project.title}
-              {...project}
-            />
+            <ProjectCard key={project.title} {...project} />
           ))}
         </div>
+
       </div>
-    </motion.section>
+    </MotionSection>
   );
 }

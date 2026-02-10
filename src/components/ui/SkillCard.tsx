@@ -1,5 +1,6 @@
 import React from "react";
 
+
 type SkillItem = {
   name: string;
   level: number;
@@ -43,6 +44,7 @@ export default function SkillCard({
   skills,
 }: SkillCardProps) {
   const styles = accentStyles[accent];
+
 
   return (
     <div className="rounded-2xl border border-border bg-card p-8 space-y-6">

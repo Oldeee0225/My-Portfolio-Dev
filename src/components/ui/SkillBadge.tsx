@@ -1,4 +1,8 @@
-function SkillBadge({ label }: { label: string }) {
+
+function SkillBadge({ label }: { label: string })
+
+{
+
   return (
     <span
       className="

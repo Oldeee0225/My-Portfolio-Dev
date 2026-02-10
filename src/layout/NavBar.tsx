@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Code2, Menu } from "lucide-react";
+import { Code2, Menu, X } from "lucide-react";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -21,10 +21,9 @@ export default function Navbar() {
           className={`
             mt-4 flex h-14 items-center justify-between px-5
             rounded-full backdrop-blur-xl transition-all duration-300
-            ${
-              scrolled
-                ? "bg-black/80 border border-white/10 shadow-lg"
-                : "bg-black/50 border border-white/10"
+            ${scrolled
+              ? "bg-black/80 border border-white/10 shadow-lg"
+              : "bg-black/50 border border-white/10"
             }
           `}
         >
@@ -45,7 +44,7 @@ export default function Navbar() {
                 { id: "skills", label: "Habilidades" },
                 { id: "projects", label: "Proyectos" },
                 { id: "experience", label: "Experiencia" },
-                { id: "technest", label: "TechNest" },
+                { id: "company", label: "TechNest" },
               ].map((item) => (
                 <a
                   key={item.id}
@@ -69,33 +68,36 @@ export default function Navbar() {
           {/* MOBILE MENU BUTTON */}
           <button
             onClick={() => setOpen(!open)}
-            className="md:hidden p-2 rounded-lg bg-white/5 hover:bg-white/10"
+            className="md:hidden p-2 rounded-lg bg-white/5 hover:bg-white/10 z-[101] relative"
             aria-label="Abrir menú"
+            aria-expanded={open}
           >
-            <Menu className="w-5 h-5 text-white" />
+            {open ? <X className="w-5 h-5 text-white" /> : <Menu className="w-5 h-5 text-white" />}
           </button>
         </div>
 
         {/* MOBILE MENU */}
         {open && (
-          <div className="md:hidden mt-3 rounded-2xl bg-black/90 border border-white/10 backdrop-blur p-6 space-y-4">
-            {[
-              { id: "about", label: "Sobre mí" },
-              { id: "skills", label: "Habilidades" },
-              { id: "projects", label: "Proyectos" },
-              { id: "experience", label: "Experiencia" },
-              { id: "technest", label: "TechNest" },
-              { id: "contact", label: "Contacto" },
-            ].map((item) => (
-              <a
-                key={item.id}
-                href={`#${item.id}`}
-                onClick={() => setOpen(false)}
-                className="block text-white/80 hover:text-white transition"
-              >
-                {item.label}
-              </a>
-            ))}
+          <div className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-3xl pt-24 px-6 md:hidden">
+            <div className="flex flex-col space-y-6 text-center">
+              {[
+                { id: "about", label: "Sobre mí" },
+                { id: "skills", label: "Habilidades" },
+                { id: "projects", label: "Proyectos" },
+                { id: "experience", label: "Experiencia" },
+                { id: "company", label: "TechNest" },
+                { id: "contact", label: "Contacto" },
+              ].map((item) => (
+                <a
+                  key={item.id}
+                  href={`#${item.id}`}
+                  onClick={() => setOpen(false)}
+                  className="text-2xl font-medium text-white/90 hover:text-primary transition-colors"
+                >
+                  {item.label}
+                </a>
+              ))}
+            </div>
           </div>
         )}
       </nav>

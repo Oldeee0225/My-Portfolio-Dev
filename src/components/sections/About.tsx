@@ -1,10 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { fadeUp } from "../../lib/animations";
+import { fadeUp, mobileVariants, viewportConfig } from "../../lib/animations";
+import { useIsMobile } from "../../hooks/use-is-mobile";
+import MotionSection from "../ui/MotionSection";
 import Image from "next/image";
 
-const container = {
+import { Variants } from "framer-motion";
+
+const containerDesktop: Variants = {
   hidden: {},
   visible: {
     transition: {
@@ -13,7 +17,7 @@ const container = {
   },
 };
 
-const card = {
+const cardDesktop: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
@@ -23,22 +27,30 @@ const card = {
 };
 
 export default function About() {
+  const isMobile = useIsMobile();
+
   return (
-    <motion.section
+    <MotionSection
       id="about"
-      variants={fadeUp}
+      variants={isMobile ? mobileVariants : fadeUp}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true }}
-      className="relative scroll-mt-32 w-full bg-background"
+      viewport={viewportConfig}
+      className="relative scroll-mt-32 w-full bg-background mobile-static"
     >
       <div className="w-full py-16 md:py-24 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
 
           {/* LEFT */}
-          <motion.div variants={container} className="space-y-10">
+          <motion.div
+            variants={containerDesktop}
+            className="space-y-10"
+          >
             {/* Intro */}
-            <motion.div variants={card} className="space-y-6">
+            <motion.div
+              variants={cardDesktop}
+              className="space-y-6"
+            >
               <h2 className="text-3xl md:text-4xl font-bold text-foreground">
                 Sobre mí
               </h2>
@@ -61,32 +73,27 @@ export default function About() {
               </p>
             </motion.div>
 
-            {/* MAIN CARDS */}
+            {/* Cards */}
             <motion.div
-              variants={container}
+              variants={containerDesktop}
               className="grid grid-cols-1 sm:grid-cols-2 gap-6"
             >
               {[
                 {
                   title: "Cómo trabajo",
                   text:
-                    "Me enfoco en escribir código claro, mantenible y bien estructurado. Priorizo entender el problema antes de escribir soluciones.",
+                    "Me enfoco en escribir código claro, mantenible y bien estructurado.",
                 },
                 {
                   title: "Motivación",
                   text:
-                    "Me motiva aprender constantemente, enfrentar retos técnicos y mejorar cada proyecto respecto al anterior.",
+                    "Aprender constantemente y enfrentar retos técnicos reales.",
                 },
               ].map((item) => (
                 <motion.div
                   key={item.title}
-                  variants={card}
-                  whileHover={{ y: -4 }}
-                  className="
-                    rounded-2xl p-6 space-y-3
-                    bg-card border border-primary/30
-                    transition
-                  "
+                  variants={cardDesktop}
+                  className="rounded-2xl p-6 bg-card border border-primary/30"
                 >
                   <h3 className="text-xl font-semibold text-foreground">
                     {item.title}
@@ -97,33 +104,11 @@ export default function About() {
                 </motion.div>
               ))}
             </motion.div>
-
-            {/* HIGHLITHGS */}
-            <motion.div
-              variants={container}
-              className="grid grid-cols-2 gap-4 pt-4"
-            >
-              {[
-                ["Enfoque", "Arquitectura clara"],
-                ["Interés", "Frontend, Backend & Full Stack"],
-                ["Mentalidad", "Aprendizaje continuo"],
-                ["Trabajo", "Proyectos reales"],
-              ].map(([label, value]) => (
-                <motion.div
-                  key={label}
-                  variants={card}
-                  className="rounded-lg p-4 bg-card border border-primary/20"
-                >
-                  <p className="text-sm text-muted">{label}</p>
-                  <p className="font-medium text-foreground">{value}</p>
-                </motion.div>
-              ))}
-            </motion.div>
           </motion.div>
 
-          {/* RIGHT: IMAGE */}
+          {/* RIGHT IMAGE */}
           <motion.div
-            variants={card}
+            variants={cardDesktop}
             className="relative flex justify-center md:justify-end"
           >
             <Image
@@ -131,23 +116,20 @@ export default function About() {
               alt="Foto de Oldemar"
               width={520}
               height={520}
-              priority
+              sizes="(max-width: 768px) 90vw, 520px"
+              loading="lazy"
               className="
-                select-none
-                object-contain
-                w-full
+                object-contain w-full
                 max-w-[360px] sm:max-w-[420px] md:max-w-[520px]
                 drop-shadow-[0_20px_60px_rgba(99,102,241,0.25)]
-                md:mr-[-55px]
               "
             />
-
-            {/* BARRA DE LUZ */}
+            {/* Barra luminosa */}
             <div
               className="
                 absolute
                 left-1/2
-                -translate-x-1/2
+                -translate-x-[59%]
                 bottom-[-0.25rem]
                 w-[80%]
                 h-1.5
@@ -156,28 +138,30 @@ export default function About() {
                 from-transparent
                 via-primary
                 to-transparent
+                to-transparent
                 blur-[1px]
+                hidden md:block
               "
             />
 
-            {/* Glow */}
+            {/* Glow inferior */}
             <div
               className="
                 absolute
                 left-1/2
-                -translate-x-1/2
+                -translate-x-[59%]
                 bottom-3
                 w-[70%]
                 h-24
                 bg-primary/30
                 blur-[180px]
                 rounded-full
+                hidden md:block
               "
             />
           </motion.div>
-
         </div>
       </div>
-    </motion.section>
+    </MotionSection>
   );
 }

@@ -1,5 +1,7 @@
-import { Github } from "lucide-react";
+
+import { ExternalLink, Github } from "lucide-react";
 import Image from "next/image";
+
 
 type ProjectCardProps = {
   title: string;
@@ -7,6 +9,7 @@ type ProjectCardProps = {
   image: string;
   tech: string[];
   repoUrl?: string;
+  demoUrl?: string;
   featured?: boolean;
 };
 
@@ -16,8 +19,10 @@ export default function ProjectCard({
   image,
   tech,
   repoUrl,
+  demoUrl,
   featured,
 }: ProjectCardProps) {
+  
   return (
     <article
       className="
@@ -27,89 +32,62 @@ export default function ProjectCard({
         hover:border-primary/40
       "
     >
-      {/* FEATURE BADGE */}
+      {/* Featured badge */}
       {featured && (
-        <span
-          className="
-            absolute top-4 right-4 z-10
-            rounded-full bg-primary/15 px-3 py-1
-            text-xs font-medium text-primary
-            backdrop-blur
-          "
-        >
+        <span className="absolute top-4 right-4 z-10 rounded-full bg-primary/15 px-3 py-1 text-xs font-medium text-primary backdrop-blur">
           Destacado
         </span>
       )}
 
-      {/* IMAGE */}
+      {/* Image */}
       <div className="relative aspect-[16/10] overflow-hidden">
         <Image
           src={image}
           alt={title}
           fill
           sizes="(max-width: 768px) 100vw, 33vw"
-          className="
-            object-cover object-center
-            transition-transform duration-500
-            group-hover:scale-105
-          "
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+
+        {/* 👇 overlay FIXED */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent pointer-events-none" />
       </div>
 
-      {/* CONTENT */}
+      {/* Content */}
       <div className="p-6 space-y-5">
-        {/* Title + description */}
         <div className="space-y-2">
-          <h3 className="text-xl font-semibold text-foreground">
-            {title}
-          </h3>
-          <p className="text-sm text-muted leading-relaxed">
-            {description}
-          </p>
+          <h3 className="text-xl font-semibold text-foreground">{title}</h3>
+          <p className="text-sm text-muted leading-relaxed">{description}</p>
         </div>
 
-        {/* TECH STACK */}
+        {/* Tech */}
         <div className="flex flex-wrap gap-2">
           {tech.map((item) => (
             <span
               key={item}
-              className="
-                rounded-full border border-border
-                bg-background px-3 py-1
-                text-xs text-muted
-              "
+              className="rounded-full border border-border bg-background px-3 py-1 text-xs text-muted"
             >
               {item}
             </span>
           ))}
         </div>
 
-        {/* ACTIONS */}
-        <div className="flex items-center gap-3 pt-2">
-          {repoUrl ? (
+        {/* Actions */}
+        <div className="flex flex-wrap items-center gap-3 pt-2">
+          {repoUrl && (
             <a
               href={repoUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="
-                inline-flex items-center gap-2
-                text-sm text-muted
-                hover:text-primary transition
-              "
+              className="inline-flex items-center gap-2 text-sm text-muted hover:text-primary transition"
             >
               <Github className="w-4 h-4" />
               Código
             </a>
-          ) : (
-            <span
-              className="
-                inline-flex items-center
-                rounded-lg border border-border
-                bg-background/60 px-4 py-2
-                text-sm text-muted
-              "
-            >
+          )}
+
+          {!repoUrl && (
+            <span className="inline-flex items-center rounded-lg border border-border bg-background/60 px-4 py-2 text-sm text-muted">
               🚧 En construcción
             </span>
           )}

@@ -1,22 +1,29 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { fadeUp } from "../../lib/animations";
+import { fadeUp, mobileVariants, viewportConfig } from "../../lib/animations";
+import { useIsMobile } from "../../hooks/use-is-mobile";
+import MotionSection from "../ui/MotionSection";
 import { Rocket, ArrowRight } from "lucide-react";
 
 export default function Hero() {
+  const isMobile = useIsMobile();
+
   return (
-    <motion.section
-      variants={fadeUp}
+    <MotionSection
+      variants={isMobile ? mobileVariants : fadeUp}
       initial="hidden"
-      animate="visible"
+      whileInView="visible"
+      viewport={viewportConfig}
       className="
         relative
         min-h-screen
         pt-28 sm:pt-36 md:pt-44   
         px-6 sm:px-8
+        mobile-static
       "
     >
+
       {/* BACKGROUND */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         {/* Glow blobs (más suaves en mobile) */}
@@ -38,7 +45,7 @@ export default function Hero() {
 
         {/* AVAILIVILITY BADGE */}
         <motion.div
-          variants={fadeUp}
+          variants={isMobile ? mobileVariants : fadeUp}
           className="
             inline-flex items-center gap-2
             px-4 py-2
@@ -56,7 +63,7 @@ export default function Hero() {
 
         {/* HEADEING */}
         <motion.h1
-          variants={fadeUp}
+          variants={isMobile ? mobileVariants : fadeUp}
           className="
             font-bold tracking-tight
             text-4xl sm:text-5xl md:text-7xl   
@@ -69,7 +76,7 @@ export default function Hero() {
         </motion.h1>
 
         <motion.h2
-          variants={fadeUp}
+          variants={isMobile ? mobileVariants : fadeUp}
           className="
             text-lg sm:text-2xl md:text-3xl
             text-muted
@@ -79,7 +86,7 @@ export default function Hero() {
         </motion.h2>
 
         <motion.p
-          variants={fadeUp}
+          variants={isMobile ? mobileVariants : fadeUp}
           className="
             text-base sm:text-lg
             max-w-2xl mx-auto
@@ -93,7 +100,7 @@ export default function Hero() {
 
         {/* ACTIONS */}
         <motion.div
-          variants={fadeUp}
+          variants={isMobile ? mobileVariants : fadeUp}
           className="
             flex flex-col sm:flex-row   /* 🔹 botones en columna en móvil */
             items-center justify-center
@@ -136,7 +143,7 @@ export default function Hero() {
 
         {/* TECH STACK */}
         <motion.div
-          variants={fadeUp}
+          variants={isMobile ? undefined : fadeUp}
           className="
             mt-12 sm:mt-20
             flex flex-wrap
@@ -162,6 +169,6 @@ export default function Hero() {
           ))}
         </motion.div>
       </div>
-    </motion.section>
+    </MotionSection>
   );
 }

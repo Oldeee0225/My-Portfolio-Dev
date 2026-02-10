@@ -1,4 +1,5 @@
 import { Briefcase, GraduationCap } from "lucide-react";
+import { useEffect, useState } from "react";
 
 export type TimelineItemProps = {
   title: string;
@@ -18,6 +19,12 @@ export default function TimelineItem({
   isLast = false,
 }: TimelineItemProps) {
   const isWork = type === "work";
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+  }, []);
 
   return (
  <div className="relative flex gap-10">

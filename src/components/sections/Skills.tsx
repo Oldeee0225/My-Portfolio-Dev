@@ -1,7 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { fadeUp } from "../../lib/animations";
+import { fadeUp, mobileVariants, viewportConfig } from "../../lib/animations";
+import { useIsMobile } from "../../hooks/use-is-mobile";
+import MotionSection from "../ui/MotionSection";
 import SkillCard from "../ui/SkillCard";
 import {
   Smartphone,
@@ -21,17 +23,17 @@ import {
 } from "lucide-react";
 
 export default function Skills() {
+  const isMobile = useIsMobile();
   return (
-    <motion.section
+    <MotionSection
       id="skills"
-      variants={fadeUp}
+      variants={isMobile ? mobileVariants : fadeUp}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true }}
-      className="scroll-mt-32 w-full py-32 px-6 bg-background"
+      viewport={viewportConfig}
+      className="scroll-mt-32 w-full py-32 px-6 bg-background mobile-static"
     >
       <div className="max-w-7xl mx-auto space-y-20">
-
         {/* HEADER */}
         <div className="text-center space-y-6">
           <span className="inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-4 py-2 text-sm text-primary">
@@ -50,8 +52,6 @@ export default function Skills() {
 
         {/* GRID */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-
-          {/* FRONTED */}
           <SkillCard
             title="Frontend"
             icon={Smartphone}
@@ -64,7 +64,6 @@ export default function Skills() {
             ]}
           />
 
-          {/* BACKEND */}
           <SkillCard
             title="Backend"
             icon={Server}
@@ -77,7 +76,6 @@ export default function Skills() {
             ]}
           />
 
-          {/* DEVOPS */}
           <SkillCard
             title="DevOps & Tools"
             icon={Cloud}
@@ -90,7 +88,6 @@ export default function Skills() {
             ]}
           />
 
-          {/* LENGUAJE */}
           <SkillCard
             title="Idiomas"
             icon={Globe}
@@ -101,9 +98,8 @@ export default function Skills() {
               { name: "Portugués", icon: MessageCircle, level: 60 },
             ]}
           />
-
         </div>
       </div>
-    </motion.section>
+    </MotionSection>
   );
 }

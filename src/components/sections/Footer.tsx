@@ -1,9 +1,12 @@
 import { Github, Linkedin, Mail } from "lucide-react";
 
+
 export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
+
+
     <footer className="w-full border-t border-border py-12 px-6">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
 

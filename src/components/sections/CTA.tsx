@@ -1,27 +1,48 @@
 "use client";
 
+import { motion } from "framer-motion";
+import { fadeUp, mobileVariants, viewportConfig } from "../../lib/animations";
+import { useIsMobile } from "../../hooks/use-is-mobile";
+import MotionSection from "../ui/MotionSection";
 import { Mail, MessageSquare, ArrowRight } from "lucide-react";
 
 export default function CTA() {
+  const isMobile = useIsMobile();
+
   return (
-    <section
+    <MotionSection
       id="contact"
+      variants={isMobile ? mobileVariants : fadeUp}
+      initial="hidden"
+      whileInView="visible"
+      viewport={viewportConfig}
       className="
         relative scroll-mt-32 w-full
         py-24 sm:py-32
         px-5 sm:px-6
         bg-card overflow-hidden
+        mobile-static
       "
     >
       {/* BACKGROUND GLOW */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-          w-[280px] h-[280px] sm:w-[420px] sm:h-[420px]
-          bg-primary/10 rounded-full blur-3xl"
+        <div
+          className="
+            absolute top-1/2 left-1/2
+            -translate-x-1/2 -translate-y-1/2
+            w-[280px] h-[280px]
+            sm:w-[420px] sm:h-[420px]
+            bg-primary/10 rounded-full blur-3xl
+          "
         />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-          w-[200px] h-[200px] sm:w-[280px] sm:h-[280px]
-          bg-secondary/10 rounded-full blur-3xl"
+        <div
+          className="
+            absolute top-1/2 left-1/2
+            -translate-x-1/2 -translate-y-1/2
+            w-[200px] h-[200px]
+            sm:w-[280px] sm:h-[280px]
+            bg-secondary/10 rounded-full blur-3xl
+          "
         />
       </div>
 
@@ -33,10 +54,12 @@ export default function CTA() {
         </div>
 
         {/* TITLE */}
-        <h2 className="
-          text-3xl sm:text-4xl md:text-5xl
-          font-extrabold tracking-tight text-foreground
-        ">
+        <h2
+          className="
+            text-3xl sm:text-4xl md:text-5xl
+            font-extrabold tracking-tight text-foreground
+          "
+        >
           Construyamos algo{" "}
           <span className="bg-gradient-to-r from-primary via-indigo-400 to-secondary bg-clip-text text-transparent">
             increíble juntos
@@ -44,22 +67,26 @@ export default function CTA() {
         </h2>
 
         {/* DESCRIPTION */}
-        <p className="
-          text-base sm:text-lg
-          text-muted max-w-2xl mx-auto leading-relaxed
-        ">
+        <p
+          className="
+            text-base sm:text-lg
+            text-muted max-w-2xl mx-auto leading-relaxed
+          "
+        >
           Estoy disponible para colaborar en proyectos de software, productos
           digitales y soluciones a medida. Si tienes una idea o un reto técnico,
           hablemos.
         </p>
 
-        {/* ACCTIONS */}
-        <div className="
-          flex flex-col sm:flex-row
-          items-stretch sm:items-center
-          justify-center gap-3 sm:gap-4
-          pt-2 sm:pt-4
-        ">
+        {/* ACTIONS */}
+        <div
+          className="
+            flex flex-col sm:flex-row
+            items-stretch sm:items-center
+            justify-center gap-3 sm:gap-4
+            pt-2 sm:pt-4
+          "
+        >
           <a
             href="mailto:technestc4@gmail.com"
             className="
@@ -89,11 +116,13 @@ export default function CTA() {
         </div>
 
         {/* INFO CARDS */}
-        <div className="
-          grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3
-          gap-4 sm:gap-6
-          pt-10 sm:pt-16
-        ">
+        <div
+          className="
+            grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3
+            gap-4 sm:gap-6
+            pt-10 sm:pt-16
+          "
+        >
           {/* Email */}
           <div className="rounded-2xl border border-border bg-card p-6 text-center transition hover:border-primary/40">
             <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
@@ -126,6 +155,6 @@ export default function CTA() {
           </div>
         </div>
       </div>
-    </section>
+    </MotionSection>
   );
 }
